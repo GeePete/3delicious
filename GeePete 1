@@ -1,0 +1,270 @@
+
+;my showcase program for 3D objects that shows comparative size and scales ... in Blitz3D language
+
+Graphics3D 1600,1000,32,2
+
+SetBuffer BackBuffer()
+
+;path-----------------------------------------------------
+;   C:\Blitz3D108\blitzprog\Glenns\
+;**********************************************************
+
+
+plane=CreatePlane()
+grass=LoadTexture( "C:\Blitz3D108\blitzprog\Glenns\png/grass67.png" )
+ScaleTexture grass,3,3
+EntityTexture plane,grass,0,3
+
+Global player = LoadMesh( "C:\Blitz3D108\blitzprog\Glenns\b3d/LTinf.b3d" )
+PositionEntity player,15,3,100
+UpdateNormals player
+
+PositionEntity player,380,7,-20
+EntityColor player,100,200,100
+
+Global cam_piv = CreatePivot(player) ; parent the pivot to the player
+PositionEntity cam_piv,8,3,4
+
+Global camera = CreateCamera(player)
+CameraRange camera,1,2000
+CameraClsColor camera,100,100,255
+
+
+;camera=CreateCamera()
+;CameraRange camera,.1,800
+;PositionEntity camera,0,20,0
+;CameraFogColor camera,180,180,180
+;CameraFogRange camera,1,900
+;CameraClsColor camera,200,200,255
+SetCameraFOV(camera,70)
+
+
+light=CreateLight()
+TurnEntity light,30,0,0
+PositionEntity light,200,400,200
+
+
+r1=LoadMesh( "C:\Blitz3D108\blitzprog\Glenns\jpg/bldg.b3d" )
+PositionEntity r1,20,-3.9,20
+r2=LoadMesh( "C:\Blitz3D108\blitzprog\Glenns\jpg/temple.b3d" )
+PositionEntity r2,160,-.1,160
+r3=LoadMesh( "C:\Blitz3D108\blitzprog\Glenns\jpg/chalet.b3d" )
+PositionEntity r3,300,-1.2,300
+r4=LoadMesh( "C:\Blitz3D108\blitzprog\Glenns\jpg/sub1.b3d" )
+PositionEntity r4,-120,10,80
+r5=LoadMesh( "C:\Blitz3D108\blitzprog\Glenns\jpg/altree2.b3d" )
+PositionEntity r5,-300,-.1,60
+r6=LoadMesh( "C:\Blitz3D108\blitzprog\Glenns\b3d\Treebr.b3d" )
+PositionEntity r6,-200,-.1,420
+r7=LoadMesh( "C:\Blitz3D108\blitzprog\Glenns\jpg/Scene1.b3d" )
+PositionEntity r7,-600,-1.2,720
+;r8=LoadMesh( "C:\Blitz3D108\blitzprog\Glenns\b3d/LTinf.b3d" )
+;PositionEntity r8,15,1.5,100
+
+
+Cls
+
+ManNIN=LoadMesh("C:\Blitz3D108\blitzprog\Glenns\b3d/girlRT.b3d")
+ UpdateNormals ManNIN  
+ScaleEntity ManNIN,2,2,2
+PositionEntity ManNIN,80,0,80,True
+ 
+;================================
+Modh=LoadMesh("C:\Blitz3D108\blitzprog\Glenns\b3d/mh3sl.b3d")
+ UpdateNormals Modh  
+ScaleEntity Modh,2,2,2
+bark=LoadTexture("C:\Blitz3D108\blitzprog\Glenns\jpg\crate01b.jpg")
+ScaleTexture bark,.05,.1
+EntityTexture Modh,bark
+
+r8=LoadMesh( "C:\Blitz3D108\blitzprog\Glenns\b3d/LTinf.b3d",camera)
+TurnEntity r8,0,1,0
+PositionEntity r8,0,3,0
+EntityTexture r8,bark
+
+
+
+PositionEntity Modh,100,12,200,True
+TurnEntity Modh,-90,0,0
+;================================
+Modh2=LoadMesh("C:\Blitz3D108\blitzprog\Glenns\x/Modhouse.x")
+ UpdateNormals Modh2
+ScaleEntity Modh2,2,2,2
+bark2=LoadTexture("C:\Blitz3D108\blitzprog\Glenns\jpg/tanshin256.jpg")
+ScaleTexture bark2,.2,.2
+EntityTexture Modh2,bark2
+;EntityShininess Modh2,.4
+PositionEntity Modh2,170,-.1,100,True
+
+
+
+light1=CreateLight()
+PositionEntity light1,120,20,120
+;--------------------------------------------------------
+
+
+Pyra=LoadMesh("C:\Blitz3D108\blitzprog\Glenns\b3d/pyra.b3d")
+ UpdateNormals Pyra
+ScaleEntity Pyra,2,2,2
+
+EntityTexture Pyra,bark
+EntityShininess Pyra,.5
+PositionEntity Pyra,200,-.1,200,True
+
+
+
+castle=LoadMesh("C:\Blitz3D108\blitzprog\Glenns\jpg\castle.b3d")
+ScaleEntity castle,.5,.5,.5
+PositionEntity castle,44,-.1,-210
+
+
+bodsh=CreateSphere(8)
+PositionEntity bodsh,120,4,120
+bod=CreatePivot(bodsh)
+bodsh=CreateSphere(8,pivot)
+rleg=CreateCylinder(12,bodsh)
+lleg=CreateCylinder(12,bodsh)
+ScaleEntity rleg,1,3,1
+ScaleEntity lleg,1,3,1
+
+PositionEntity rleg,0,2,0
+PositionEntity lleg,0,2,0
+;rfoot=CreatePivot(rleg)
+;lfoot=CreatePivot(lleg)
+
+
+
+;88888888888888888888888888888888
+EntityType player, 1
+EntityRadius player, .5
+;EntityType camera, 1
+;EntityRadius camera, 1.0
+EntityType Plane, 2
+ 
+EntityType Modh, 2
+EntityType Pyra, 2
+EntityType Modh2, 2
+
+EntityType r1, 2
+EntityType r2, 2
+EntityType r3, 2
+EntityType r4, 2
+EntityType r5, 2
+EntityType r6, 2
+EntityType r7, 2
+EntityType castle, 2
+ 
+Buildhome()
+
+
+
+Collisions 1, 2, 2,3
+Collisions 2, 1, 2,2
+Collisions 1, 1, 2,2
+ AntiAlias enable
+;!!!!!!!!!!!MAIN  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ 
+
+While Not KeyHit(1)
+
+;If KeyDown(200) Then
+;MoveEntity camera,0,0,3
+;EndIf
+;
+;If KeyDown(203) Then
+;TurnEntity camera,0,2,0
+;EndIf
+;
+;If KeyDown(205) Then
+;TurnEntity camera,0,-1,0
+;EndIf
+;If KeyDown(30) Then
+;MoveEntity camera,0,1,0
+;EndIf
+;If KeyDown(44) Then
+;MoveEntity camera,0,-1,0
+;EndIf
+
+If KeyDown(200) Then MoveEntity player,0,0,.4
+If KeyDown(208) Then MoveEntity player,0,0,-.4
+If KeyDown(203) Then TurnEntity player,0,1,0
+If KeyDown(205) Then TurnEntity player,0,-1,0
+
+If KeyDown(57)=True Then 
+MoveEntity player,0,.3,0
+EndIf
+
+;If KeyDown(60)=True Then MoveEntity player,0,-.3,0
+TurnEntity cam_piv, MouseYSpeed(), MouseXSpeed(), 0
+ 
+;PositionEntity player 0,-.1,0
+
+
+;If KeyDown(61)=True Then TurnEntity cam_piv,-1,0,0
+
+
+x#=EntityX(player) 
+y#=EntityY(player) 
+z#=EntityZ(player) 
+
+
+ 
+PositionEntity player,x#,y#,z# ;  make the Y down gravity at 0.1   then you can climp slopes
+
+
+followcam()
+
+
+UpdateWorld
+
+RenderWorld
+
+Text 320,500,"b3d in stock drawing scale"
+Text 30,200,x#,y#,z#
+
+
+Flip
+
+Wend
+End
+;--------------------------------------------------
+Function Buildhome()
+
+
+
+leftw= CreateCube(cent)
+front=CreateCube(cent)
+back=CreateCube(cent)
+rightw=CreateCube(cent)
+ScaleEntity leftw,.2,2,20
+ScaleEntity rightw,.5,3,20
+ScaleEntity front,10,3,1
+ScaleEntity back,10,3,1 
+EntityType leftw,2
+EntityType rightw,2
+EntityType front,2
+EntityType back,2 
+
+
+PositionEntity front,0,3,90
+PositionEntity back,0,3,110
+PositionEntity leftw,-10,5,100
+PositionEntity rightw,10,3,100
+
+End Function
+;----------------------------------------------------- 
+
+
+
+
+Function SetCameraFOV(Camera, FOV#) 
+CameraZoom Camera, 1.0 / Tan(FOV#/2.0) 
+End Function 
+
+Function followcam()
+
+   PointEntity camera,cam_piv
+   MoveEntity camera,0,0,EntityDistance#(camera,cam_piv)/2    ; small divisor makes camera stay closer while moving
+   PointEntity camera,player
+
+End Function
